@@ -7,8 +7,8 @@ export default defineSchema({
     personalizedSales: v.string(),
     aiSuggestions: v.string(),
     advancedSegmentation: v.string(),
+    featurePreferences: v.string(),
     performanceTracking: v.string(),
     crossSiteLearning: v.string(),
-    predictiveAnalytics: v.string(),
-  }).index("by_targetingCustomers", ["targetingCustomers"]).index("by_personalizedSales", ["personalizedSales"]).index("by_aiSuggestions", ["aiSuggestions"]).index("by_advancedSegmentation", ["advancedSegmentation"]).index("by_performanceTracking", ["performanceTracking"]).index("by_crossSiteLearning", ["crossSiteLearning"]).index("by_predictiveAnalytics", ["predictiveAnalytics"]),
+  }),
 });
