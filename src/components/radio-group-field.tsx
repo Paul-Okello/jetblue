@@ -39,7 +39,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
             <RadioGroup
               onValueChange={field.onChange}
               defaultValue={field.value}
-              className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              className="flex flex-wrap gap-4"
             >
               {options.map((option) => (
                 <FormItem

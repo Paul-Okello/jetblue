@@ -116,26 +116,27 @@ export default function Quiz() {
         advancedSegmentation: data.advancedSegmentation,
         performanceTracking: data.performanceTracking,
         crossSiteLearning: data.crossSiteLearning,
-        predictiveAnalytics: data.predictiveAnalytics,
+        featurePreferences: data.featurePreference,
       });
       toast.success(
         "Thank you! Your insights are already helping us take flight"
       );
     } catch (error) {
       toast.error("An error occurred. Please try again.");
+      form.reset();
     } finally {
       form.reset();
     }
   }
 
   return (
-    <div className="container my-4 mx-auto">
+    <div className="container p-8 mx-auto">
       <Card>
         <CardHeader>
           <CardTitle className="text-center select-none text-2xl">
             Sales Strategy Survey
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-lg">
             Your perspective is invaluable. With just a few clicks, you&apos;re
             guiding us toward simpler, smarter sales strategies that make a
             difference. Let&apos;s streamline our approach together and elevate
