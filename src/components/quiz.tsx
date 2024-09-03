@@ -22,81 +22,69 @@ import { api } from "../../convex/_generated/api";
 const formFields = {
   targetingCustomers: {
     question:
-      "How effective do you believe our current system is at prioritizing customers who don’t already own our products (e.g., airline credit cards)?",
+      "How effective is our system at prioritizing customers who don’t already own our products?",
     options: [
-      { value: "very-effective", label: "Very Effective" },
-      { value: "somewhat-effective", label: "Somewhat Effective" },
-      { value: "neutral", label: "Neutral" },
-      { value: "somewhat-ineffective", label: "Somewhat Ineffective" },
-      { value: "very-ineffective", label: "Very Ineffective" },
+      { value: "effective", label: "Effective" },
+      { value: "needs-improvement", label: "Needs Improvement" },
+      { value: "ineffective", label: "Ineffective" },
     ],
   },
   personalizedSales: {
     question:
-      "How valuable would it be for sales representatives to have access to personalized dashboards showing their historical customer interaction data?",
+      "How valuable would personalized dashboards showing past customer interactions be for our sales reps?",
     options: [
-      { value: "extremely-valuable", label: "Extremely Valuable" },
-      { value: "very-valuable", label: "Very Valuable" },
-      { value: "moderately-valuable", label: "Moderately Valuable" },
-      { value: "slightly-valuable", label: "Slightly Valuable" },
-      { value: "not-valuable", label: "Not Valuable" },
+      { value: "high-value", label: "High Value" },
+      { value: "some-value", label: "Some Value" },
+      { value: "low-value", label: "Low Value" },
     ],
   },
   aiSuggestions: {
     question:
-      "Do you think real-time AI-driven suggestions for sales pitch adjustments would enhance our representatives' ability to close sales?",
+      "Would real-time AI suggestions for sales pitch adjustments help our reps close more deals?",
     options: [
-      { value: "absolutely", label: "Absolutely" },
-      { value: "probably", label: "Probably" },
+      { value: "yes", label: "Yes" },
       { value: "maybe", label: "Maybe" },
-      { value: "probably-not", label: "Probably Not" },
-      { value: "definitely-not", label: "Definitely Not" },
+      { value: "no", label: "No" },
     ],
   },
   advancedSegmentation: {
     question:
-      "How critical is it to expand our customer segmentation beyond product ownership to include factors like demographics and travel patterns?",
+      "How important is expanding customer segmentation to include demographics and travel patterns?",
     options: [
-      { value: "critical", label: "Critical" },
-      { value: "very-important", label: "Very Important" },
-      { value: "moderately-important", label: "Moderately Important" },
-      { value: "slightly-important", label: "Slightly Important" },
+      { value: "important", label: "Important" },
+      { value: "somewhat-important", label: "Somewhat Important" },
       { value: "not-important", label: "Not Important" },
+    ],
+  },
+  featurePreference: {
+    question:
+      "Which feature would you prioritize first for our sales strategy improvement?",
+    options: [
+      { value: "personalized-dashboards", label: "Personalized Dashboards" },
+      { value: "ai-pitch-suggestions", label: "AI Pitch Suggestions" },
+      { value: "expanded-segmentation", label: "Expanded Segmentation" },
     ],
   },
   performanceTracking: {
     question:
-      "Would regular, detailed performance reports that highlight strengths, weaknesses, and growth opportunities improve our sales team's effectiveness?",
+      "Would regular performance reports highlighting strengths and growth opportunities improve our sales team?",
     options: [
-      { value: "significantly-improve", label: "Significantly Improve" },
-      { value: "improve", label: "Improve" },
-      { value: "neutral", label: "Neutral" },
-      { value: "slightly-improve", label: "Slightly Improve" },
-      { value: "not-improve", label: "Not Improve" },
+      { value: "yes", label: "Yes" },
+      { value: "maybe", label: "Maybe" },
+      { value: "no", label: "No" },
     ],
   },
   crossSiteLearning: {
     question:
-      "How beneficial would it be to implement a centralized platform to share best practices across all our customer service sites?",
+      "How beneficial would a platform for sharing best practices across all customer service sites be?",
     options: [
-      { value: "extremely-beneficial", label: "Extremely Beneficial" },
-      { value: "very-beneficial", label: "Very Beneficial" },
-      { value: "moderately-beneficial", label: "Moderately Beneficial" },
-      { value: "slightly-beneficial", label: "Slightly Beneficial" },
-      { value: "not-beneficial", label: "Not Beneficial" },
-    ],
-  },
-  predictiveAnalytics: {
-    question:
-      "To what extent do you believe predictive analytics could help our sales representatives prioritize high-probability leads?",
-    options: [
-      { value: "great-extent", label: "To a Great Extent" },
-      { value: "moderate-extent", label: "To a Moderate Extent" },
-      { value: "small-extent", label: "To a Small Extent" },
-      { value: "not-at-all", label: "Not at All" },
+      { value: "high-benefit", label: "High Benefit" },
+      { value: "some-benefit", label: "Some Benefit" },
+      { value: "low-benefit", label: "Low Benefit" },
     ],
   },
 };
+
 
 const FormSchema = z.object(
   Object.fromEntries(
