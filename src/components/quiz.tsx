@@ -18,73 +18,77 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-// Form schema and field configurations
 const formFields = {
   targetingCustomers: {
     question:
-      "How effective is our system at prioritizing customers who don’t already own our products?",
+      "What challenges do you face with current paper-based record-keeping methods?",
     options: [
-      { value: "effective", label: "Effective" },
-      { value: "needs-improvement", label: "Needs Improvement" },
-      { value: "ineffective", label: "Ineffective" },
+      { value: "time-consuming", label: "Time-Consuming" },
+      { value: "error-prone", label: "Error-Prone" },
+      { value: "difficult-to-access", label: "Difficult to Access" },
+      { value: "none", label: "None" },
     ],
   },
-  personalizedSales: {
+  dataAccessibility: {
     question:
-      "How valuable would personalized dashboards showing past customer interactions be for our sales reps?",
+      "How often do you encounter difficulties accessing patient records when making treatment decisions?",
     options: [
-      { value: "high-value", label: "High Value" },
-      { value: "some-value", label: "Some Value" },
-      { value: "low-value", label: "Low Value" },
+      { value: "frequently", label: "Frequently" },
+      { value: "sometimes", label: "Sometimes" },
+      { value: "rarely", label: "Rarely" },
+      { value: "never", label: "Never" },
     ],
   },
-  aiSuggestions: {
+  trainingImportance: {
     question:
-      "Would real-time AI suggestions for sales pitch adjustments help our reps close more deals?",
+      "What obstacles do you anticipate in transitioning healthcare staff to digital health records?",
     options: [
-      { value: "yes", label: "Yes" },
-      { value: "maybe", label: "Maybe" },
-      { value: "no", label: "No" },
+      { value: "lack-of-training", label: "Lack of Training" },
+      { value: "resistance-to-change", label: "Resistance to Change" },
+      { value: "technical-issues", label: "Technical Issues" },
+      { value: "no-obstacles", label: "No Obstacles" },
     ],
   },
-  advancedSegmentation: {
+  dataSecurityConcerns: {
     question:
-      "How important is expanding customer segmentation to include demographics and travel patterns?",
+      "What specific concerns do you have regarding the security of patient data in digital systems?",
     options: [
-      { value: "important", label: "Important" },
+      { value: "data-breach", label: "Data Breach" },
+      { value: "unauthorized-access", label: "Unauthorized Access" },
+      { value: "data-loss", label: "Data Loss" },
+      { value: "no-concerns", label: "No Concerns" },
+    ],
+  },
+  featurePreferences: {
+    question:
+      "Which feature do you find lacking in current record-keeping methods that a digital system should prioritize?",
+    options: [
+      { value: "automated-data-entry", label: "Automated Data Entry" },
+      { value: "real-time-access", label: "Real-Time Access" },
+      { value: "data-backup", label: "Data Backup" },
+      { value: "user-friendly-interface", label: "User-Friendly Interface" },
+    ],
+  },
+  feedbackMechanism: {
+    question:
+      "How important is it for you to provide feedback for improving a digital health record system?",
+    options: [
+      { value: "very-important", label: "Very Important" },
       { value: "somewhat-important", label: "Somewhat Important" },
       { value: "not-important", label: "Not Important" },
     ],
   },
-  featurePreference: {
+  patientEngagement: {
     question:
-      "Which feature would you prioritize first for our sales strategy improvement?",
+      "How do you think patient access to their own health records could improve healthcare delivery?",
     options: [
-      { value: "personalized-dashboards", label: "Personalized Dashboards" },
-      { value: "ai-pitch-suggestions", label: "AI Pitch Suggestions" },
-      { value: "expanded-segmentation", label: "Expanded Segmentation" },
-    ],
-  },
-  performanceTracking: {
-    question:
-      "Would regular performance reports highlighting strengths and growth opportunities improve our sales team?",
-    options: [
-      { value: "yes", label: "Yes" },
-      { value: "maybe", label: "Maybe" },
-      { value: "no", label: "No" },
-    ],
-  },
-  crossSiteLearning: {
-    question:
-      "How beneficial would a platform for sharing best practices across all customer service sites be?",
-    options: [
-      { value: "high-benefit", label: "High Benefit" },
-      { value: "some-benefit", label: "Some Benefit" },
-      { value: "low-benefit", label: "Low Benefit" },
+      { value: "enhance-trust", label: "Enhance Trust" },
+      { value: "improve-communication", label: "Improve Communication" },
+      { value: "foster-engagement", label: "Foster Engagement" },
+      { value: "no-impact", label: "No Impact" },
     ],
   },
 };
-
 
 const FormSchema = z.object(
   Object.fromEntries(
@@ -111,12 +115,12 @@ export default function Quiz() {
     try {
       await addInsight({
         targetingCustomers: data.targetingCustomers,
-        personalizedSales: data.personalizedSales,
-        aiSuggestions: data.aiSuggestions,
-        advancedSegmentation: data.advancedSegmentation,
-        performanceTracking: data.performanceTracking,
-        crossSiteLearning: data.crossSiteLearning,
-        featurePreferences: data.featurePreference,
+        dataAccessibility: data.dataAccessibility,
+        trainingImportance: data.trainingImportance,
+        dataSecurityConcerns: data.dataSecurityConcerns,
+        feedbackMechanism: data.feedbackMechanism,
+        patientEngagement: data.patientEngagement,
+        featurePreferences: data.featurePreferences,
       });
       toast.success(
         "Thank you! Your insights are already helping us take flight"
@@ -134,13 +138,15 @@ export default function Quiz() {
       <Card>
         <CardHeader>
           <CardTitle className="text-center select-none text-2xl">
-            Sales Strategy Survey
+            Help Us Transform Healthcare Record-Keeping
           </CardTitle>
           <CardDescription className="text-lg">
-            Your perspective is invaluable. With just a few clicks, you&apos;re
-            guiding us toward simpler, smarter sales strategies that make a
-            difference. Let&apos;s streamline our approach together and elevate
-            every customer experience.
+            Your insights are crucial in shaping a more efficient and secure
+            digital health record system. By sharing your experiences and needs,
+            you&apos;ll play a key role in enhancing healthcare delivery,
+            ensuring better patient outcomes, and streamlining communication
+            among providers. Join us in this important effort to improve the
+            future of healthcare!
           </CardDescription>
         </CardHeader>
         <CardContent>
