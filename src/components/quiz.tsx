@@ -123,7 +123,7 @@ export default function Quiz() {
         featurePreferences: data.featurePreferences,
       });
       toast.success(
-        "Thank you! Your insights are already helping us take flight"
+        "🥂 To a future where patient care is boundless and limitless! 🚀🩺✨"
       );
     } catch (error) {
       toast.error("An error occurred. Please try again.");
