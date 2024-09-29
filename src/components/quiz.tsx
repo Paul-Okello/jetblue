@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 "use client";
 
 import { useForm } from "react-hook-form";
@@ -11,57 +13,89 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Form } from "@/components/ui/form";
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from "@/components/ui/form";
 import { TypographyH2 } from "./ui/typography";
 import { RadioGroupField } from "./radio-group-field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { api } from "../../convex/_generated/api";
+import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
+import { Checkbox } from "./ui/checkbox";
 
 const formFields = {
-  targetingCustomers: {
+  currentSolutions: {
     question:
-      "What challenges do you face with current paper-based record-keeping methods?",
+      "How do you currently manage patient records and other healthcare data?",
+    multipleChoice: false,
+    options: [
+      { value: "paper-only", label: "Paper-Based Only" },
+      {
+        value: "digital-tools",
+        label: "Use of Basic Digital Tools (e.g., Excel)",
+      },
+      { value: "hybrid", label: "Combination of Paper and Digital Tools" },
+      { value: "emr-system", label: "Electronic Medical Record (EMR) System" },
+    ],
+  },
+  existingGaps: {
+    question:
+      "What challenges do you face with your current method of record-keeping? (You can select multiple)",
+    multipleChoice: true,
     options: [
       { value: "time-consuming", label: "Time-Consuming" },
-      { value: "error-prone", label: "Error-Prone" },
+      { value: "high-error-rate", label: "Prone to Errors" },
+      { value: "data-loss", label: "Data Loss or Misplacement" },
       { value: "difficult-to-access", label: "Difficult to Access" },
-      { value: "none", label: "None" },
+      { value: "privacy-concerns", label: "Lack of Data Privacy" },
     ],
   },
-  dataAccessibility: {
+  desiredEfficiencies: {
     question:
-      "How often do you encounter difficulties accessing patient records when making treatment decisions?",
-    options: [
-      { value: "frequently", label: "Frequently" },
-      { value: "sometimes", label: "Sometimes" },
-      { value: "rarely", label: "Rarely" },
-      { value: "never", label: "Never" },
-    ],
-  },
-  featurePreferences: {
-    question:
-      "Which feature do you find lacking in current record-keeping methods that a digital system should prioritize?",
+      "Which of the following would most improve your efficiency in managing health records? (You can select multiple)",
+    multipleChoice: true,
     options: [
       { value: "automated-data-entry", label: "Automated Data Entry" },
-      { value: "real-time-access", label: "Real-Time Access" },
-      { value: "data-backup", label: "Data Backup" },
-      { value: "user-friendly-interface", label: "User-Friendly Interface" },
+      { value: "real-time-access", label: "Real-Time Access to Records" },
+      {
+        value: "faster-retrieval",
+        label: "Faster Retrieval of Patient Histories",
+      },
+      {
+        value: "scalable-system",
+        label: "Scalability to Handle Large Data Volumes",
+      },
     ],
   },
-  trainingImportance: {
+  futureBudgetConsiderations: {
     question:
-      "What obstacles do you anticipate in transitioning healthcare staff to digital health records?",
+      "If you see a clear return on investment, would you consider investing in a digital health record system in the future?",
+    multipleChoice: false,
     options: [
-      { value: "lack-of-training", label: "Lack of Training" },
-      { value: "resistance-to-change", label: "Resistance to Change" },
-      { value: "technical-issues", label: "Technical Issues" },
-      { value: "no-obstacles", label: "No Obstacles" },
+      { value: "yes", label: "Yes" },
+      { value: "no", label: "No" },
+    ],
+  },
+  willingnessToPayNow: {
+    question:
+      "What will you be willing to invest in for a digital health record system?",
+    multipleChoice: false,
+    options: [
+      { value: "one-time-payment", label: "One-Time Payment" },
+      { value: "monthly-subscription", label: "Monthly Subscription" },
+      { value: "not-sure", label: "Not Sure at the Moment" },
     ],
   },
   dataSecurityConcerns: {
     question:
-      "What specific concerns do you have regarding the security of patient data in digital systems?",
+      "What concerns do you have regarding the security of patient data in digital systems? (You can select multiple)",
+    multipleChoice: true,
     options: [
       { value: "data-breach", label: "Data Breach" },
       { value: "unauthorized-access", label: "Unauthorized Access" },
@@ -69,44 +103,65 @@ const formFields = {
       { value: "no-concerns", label: "No Concerns" },
     ],
   },
-  patientEngagement: {
-    question:
-      "How do you think patient access to their own health records could improve healthcare delivery?",
-    options: [
-      { value: "enhance-trust", label: "Enhance Trust" },
-      { value: "improve-communication", label: "Improve Communication" },
-      { value: "foster-engagement", label: "Foster Engagement" },
-      { value: "no-impact", label: "No Impact" },
-    ],
-  },
-  feedbackMechanism: {
-    question:
-      "How important is it for you to provide feedback for improving a digital health record system?",
-    options: [
-      { value: "very-important", label: "Very Important" },
-      { value: "somewhat-important", label: "Somewhat Important" },
-      { value: "not-important", label: "Not Important" },
-    ],
-  },
 };
 
-const FormSchema = z.object(
-  Object.fromEntries(
-    Object.entries(formFields).map(([key, field]) => [
-      key,
-      z.enum(
-        field.options.map((option) => option.value) as [string, ...string[]],
-        {
-          required_error: `Your opinion matters—don't miss the chance to share it.`,
-        }
-      ),
-    ])
-  )
-);
+// Form Schema: Adjust types for multiple-choice fields to be arrays
+// Explicit Zod Schema Creation
+const FormSchema = z.object({
+  currentSolutions: z.enum([
+    "paper-only",
+    "digital-tools",
+    "hybrid",
+    "emr-system",
+  ]),
+
+  existingGaps: z
+    .array(
+      z.enum([
+        "time-consuming",
+        "high-error-rate",
+        "data-loss",
+        "difficult-to-access",
+        "privacy-concerns",
+      ])
+    )
+    .optional(),
+
+  desiredEfficiencies: z
+    .array(
+      z.enum([
+        "automated-data-entry",
+        "real-time-access",
+        "faster-retrieval",
+        "scalable-system",
+      ])
+    )
+    .optional(),
+
+  futureBudgetConsiderations: z.enum(["yes", "no"]),
+
+  willingnessToPayNow: z.enum([
+    "one-time-payment",
+    "monthly-subscription",
+    "not-sure",
+  ]),
+
+  dataSecurityConcerns: z
+    .array(
+      z.enum(["data-breach", "unauthorized-access", "data-loss", "no-concerns"])
+    )
+    .optional(),
+});
 
 export default function Quiz() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
+    defaultValues: Object.fromEntries(
+      Object.entries(formFields).map(([key, field]) => [
+        key,
+        field.multipleChoice ? [] : "",
+      ])
+    ),
   });
 
   const addInsight = useMutation(api.insight.addCustomerInsight);
@@ -114,13 +169,12 @@ export default function Quiz() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await addInsight({
-        targetingCustomers: data.targetingCustomers,
-        dataAccessibility: data.dataAccessibility,
-        trainingImportance: data.trainingImportance,
-        dataSecurityConcerns: data.dataSecurityConcerns,
-        feedbackMechanism: data.feedbackMechanism,
-        patientEngagement: data.patientEngagement,
-        featurePreferences: data.featurePreferences,
+        currentSolutions: data.currentSolutions,
+        dataSecurityConcerns: data.dataSecurityConcerns as string[],
+        desiredEfficiencies: data.desiredEfficiencies as string[],
+        existingGaps: data.existingGaps as string[],
+        futureBudgetConsiderations: data.futureBudgetConsiderations,
+        willingnessToPayNow: data.willingnessToPayNow,
       });
       toast.success(
         "🥂 To a future where patient care is boundless and limitless! 🚀🩺✨"
@@ -140,7 +194,7 @@ export default function Quiz() {
           <CardTitle className="text-center select-none text-2xl">
             Help Us Transform Healthcare Record-Keeping
           </CardTitle>
-          <CardDescription className="text-lg">
+          <CardDescription className="">
             Your insights are crucial in shaping a more efficient and secure
             digital health record system. By sharing your experiences and
             challenges with current methods, you will help us understand the key
@@ -155,16 +209,81 @@ export default function Quiz() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              <div className="gap-2 grid grid-cols-1 md:grid-cols-2  select-none">
-                {Object.entries(formFields).map(([name, field]) => (
-                  <RadioGroupField
-                    key={name}
-                    name={name}
-                    question={field.question}
-                    options={field.options}
-                    form={form}
-                  />
-                ))}
+              <div className="space-y-4 select-none">
+                {Object.entries(formFields).map(
+                  ([fieldMain, { question, options, multipleChoice }]) => (
+                    <div key={fieldMain} className="space-y-4">
+                      <h3 className="font-medium">{question}</h3>
+                      {multipleChoice ? (
+                        <FormField
+                          control={form.control}
+                          name={fieldMain}
+                          render={({ field }) => (
+                            <FormItem>
+                              <div className="mb-4 grid grid-cols-2 gap-4">
+                                {options.map((option) => (
+                                  <FormItem
+                                    key={option.value}
+                                    className="space-x-3"
+                                  >
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(
+                                          option.value
+                                        )}
+                                        onCheckedChange={(checked) => {
+                                          const newValue = checked
+                                            ? [...field.value, option.value]
+                                            : field.value.filter(
+                                                (val) => val !== option.value
+                                              );
+                                          field.onChange(newValue);
+                                        }}
+                                      />
+                                    </FormControl>
+                                    <FormLabel className="text-sm font-normal">
+                                      {option.label}
+                                    </FormLabel>
+                                  </FormItem>
+                                ))}
+                              </div>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                      ) : (
+                        <FormField
+                          control={form.control}
+                          name={fieldMain}
+                          render={({ field: radioField }) => (
+                            <FormItem className="flex items-center justify-start">
+                              <FormControl>
+                                <RadioGroup
+                                  onValueChange={radioField.onChange}
+                                  value={radioField.value}
+                                >
+                                  {options.map((option) => (
+                                    <FormItem
+                                      className="flex items-center space-x-3"
+                                      key={option.value}
+                                    >
+                                      <FormControl>
+                                        <RadioGroupItem value={option.value} />
+                                      </FormControl>
+                                      <FormLabel className="font-normal">
+                                        {option.label}
+                                      </FormLabel>
+                                    </FormItem>
+                                  ))}
+                                </RadioGroup>
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      )}
+                    </div>
+                  )
+                )}
               </div>
               <div className="flex justify-center mt-3">
                 <Button disabled={form.formState.isSubmitting}>

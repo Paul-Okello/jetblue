@@ -3,13 +3,12 @@ import { v } from 'convex/values';
 
 export const addCustomerInsight = mutation({
   args: {
-    targetingCustomers: v.string(),
-    dataAccessibility: v.string(),
-    trainingImportance: v.string(),
-    dataSecurityConcerns: v.string(),
-    featurePreferences: v.string(),
-    feedbackMechanism: v.string(),
-    patientEngagement: v.string(),
+    currentSolutions: v.string(),
+    existingGaps: v.array(v.string()),
+    desiredEfficiencies: v.array(v.string()),
+    futureBudgetConsiderations: v.string(),
+    willingnessToPayNow: v.string(),
+    dataSecurityConcerns: v.array(v.string()),
   },
   handler: async (ctx, args) => {
     return await ctx.db.insert("customerInsight", {

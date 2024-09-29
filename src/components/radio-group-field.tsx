@@ -20,6 +20,7 @@ interface RadioGroupFieldProps {
   question: string;
   options: RadioOption[];
   form: UseFormReturn<any>;
+  index: number;
 }
 
 export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
@@ -27,6 +28,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
   question,
   options,
   form,
+  index,
 }) => {
   return (
     <FormField
@@ -34,7 +36,10 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = ({
       name={name}
       render={({ field }) => (
         <FormItem className="space-y-3">
-          <FormLabel>{question}</FormLabel>
+          <FormLabel>
+            <span className="mr-2">{index + 1}</span>
+            {question}
+          </FormLabel>
           <FormControl>
             <RadioGroup
               onValueChange={field.onChange}

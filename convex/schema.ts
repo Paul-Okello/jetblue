@@ -3,12 +3,11 @@ import { v } from 'convex/values';
 
 export default defineSchema({
   customerInsight: defineTable({
-    targetingCustomers: v.string(),
-    dataAccessibility: v.string(),
-    trainingImportance: v.string(),
-    dataSecurityConcerns: v.string(),
-    featurePreferences: v.string(),
-    feedbackMechanism: v.string(),
-    patientEngagement: v.string(),
+    currentSolutions: v.string(),
+    existingGaps: v.array(v.string()),
+    desiredEfficiencies: v.array(v.string()),
+    futureBudgetConsiderations: v.string(),
+    willingnessToPayNow: v.string(),
+    dataSecurityConcerns: v.array(v.string()),
   }),
 });
