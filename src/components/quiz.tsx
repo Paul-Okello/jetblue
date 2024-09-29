@@ -39,6 +39,16 @@ const formFields = {
       { value: "never", label: "Never" },
     ],
   },
+  featurePreferences: {
+    question:
+      "Which feature do you find lacking in current record-keeping methods that a digital system should prioritize?",
+    options: [
+      { value: "automated-data-entry", label: "Automated Data Entry" },
+      { value: "real-time-access", label: "Real-Time Access" },
+      { value: "data-backup", label: "Data Backup" },
+      { value: "user-friendly-interface", label: "User-Friendly Interface" },
+    ],
+  },
   trainingImportance: {
     question:
       "What obstacles do you anticipate in transitioning healthcare staff to digital health records?",
@@ -59,14 +69,14 @@ const formFields = {
       { value: "no-concerns", label: "No Concerns" },
     ],
   },
-  featurePreferences: {
+  patientEngagement: {
     question:
-      "Which feature do you find lacking in current record-keeping methods that a digital system should prioritize?",
+      "How do you think patient access to their own health records could improve healthcare delivery?",
     options: [
-      { value: "automated-data-entry", label: "Automated Data Entry" },
-      { value: "real-time-access", label: "Real-Time Access" },
-      { value: "data-backup", label: "Data Backup" },
-      { value: "user-friendly-interface", label: "User-Friendly Interface" },
+      { value: "enhance-trust", label: "Enhance Trust" },
+      { value: "improve-communication", label: "Improve Communication" },
+      { value: "foster-engagement", label: "Foster Engagement" },
+      { value: "no-impact", label: "No Impact" },
     ],
   },
   feedbackMechanism: {
@@ -76,16 +86,6 @@ const formFields = {
       { value: "very-important", label: "Very Important" },
       { value: "somewhat-important", label: "Somewhat Important" },
       { value: "not-important", label: "Not Important" },
-    ],
-  },
-  patientEngagement: {
-    question:
-      "How do you think patient access to their own health records could improve healthcare delivery?",
-    options: [
-      { value: "enhance-trust", label: "Enhance Trust" },
-      { value: "improve-communication", label: "Improve Communication" },
-      { value: "foster-engagement", label: "Foster Engagement" },
-      { value: "no-impact", label: "No Impact" },
     ],
   },
 };
@@ -142,11 +142,14 @@ export default function Quiz() {
           </CardTitle>
           <CardDescription className="text-lg">
             Your insights are crucial in shaping a more efficient and secure
-            digital health record system. By sharing your experiences and needs,
-            you&apos;ll play a key role in enhancing healthcare delivery,
-            ensuring better patient outcomes, and streamlining communication
-            among providers. Join us in this important effort to improve the
-            future of healthcare!
+            digital health record system. By sharing your experiences and
+            challenges with current methods, you will help us understand the key
+            areas that need improvement and guide the development of features
+            that address these needs. Your responses will remain completely
+            anonymous and will be used solely to inform design decisions and
+            ensure that the final solution meets the requirements of healthcare
+            providers like you. Join us in this important effort to enhance
+            patient outcomes and improve the future of healthcare!
           </CardDescription>
         </CardHeader>
         <CardContent>
