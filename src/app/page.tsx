@@ -5,7 +5,7 @@ type Props = {};
 
 const HomePage = (props: Props) => {
   return (
-    <div className="bg-muted">
+    <div className="bg-muted min-h-screen">
       <Quiz />
     </div>
   );
