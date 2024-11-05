@@ -286,7 +286,7 @@ export default function Quiz() {
                 )}
               </div>
               <div className="flex justify-center mt-3">
-                <Button disabled={form.formState.isSubmitting}>
+                <Button disabled={true}>
                   {form.formState.isSubmitting ? "Submitting..." : "Submit"}
                 </Button>
               </div>

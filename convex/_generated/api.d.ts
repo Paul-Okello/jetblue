@@ -13,6 +13,7 @@ import type {
   FilterApi,
   FunctionReference,
 } from "convex/server";
+import type * as facilities from "../facilities.js";
 import type * as insight from "../insight.js";
 
 /**
@@ -24,6 +25,7 @@ import type * as insight from "../insight.js";
  * ```
  */
 declare const fullApi: ApiFromModules<{
+  facilities: typeof facilities;
   insight: typeof insight;
 }>;
 export declare const api: FilterApi<
